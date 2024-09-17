@@ -1,12 +1,12 @@
-.flex { display: flex; }
+/* .flex { display: flex; }
 .inline-flex { display: inline-flex; }
 
-/* 1. Fix for Chrome 44 bug.
- * https://code.google.com/p/chromium/issues/detail?id=506893 */
+/* 1. Fix for Chrome 44 bug. 
+ * https://code.google.com/p/chromium/issues/detail?id=506893 */ /*
 .flex-auto {
   flex: 1 1 auto;
-  min-width: 0; /* 1 */
-  min-height: 0; /* 1 */
+  min-width: 0; /* 1 */ /*
+  min-height: 0; /* 1 */ /*
 }
 
 .flex-none { flex: none; }
@@ -56,8 +56,8 @@
   .inline-flex-ns { display: inline-flex; }
   .flex-auto-ns {
     flex: 1 1 auto;
-    min-width: 0; /* 1 */
-    min-height: 0; /* 1 */
+    min-width: 0; /* 1 */  /*
+    min-height: 0; /* 1 */ /*
   }
   .flex-none-ns { flex: none; }
   .flex-column-ns { flex-direction: column; }
@@ -104,8 +104,8 @@
   .inline-flex-m { display: inline-flex; }
   .flex-auto-m {
     flex: 1 1 auto;
-    min-width: 0; /* 1 */
-    min-height: 0; /* 1 */
+    min-width: 0; /* 1 */ /*
+    min-height: 0; /* 1 */ /*
   }
   .flex-none-m { flex: none; }
   .flex-column-m { flex-direction: column; }
@@ -153,8 +153,8 @@
   .inline-flex-l { display: inline-flex; }
   .flex-auto-l {
     flex: 1 1 auto;
-    min-width: 0; /* 1 */
-    min-height: 0; /* 1 */
+    min-width: 0; /* 1 */ /*
+    min-height: 0; /* 1 */ /*
   }
   .flex-none-l { flex: none; }
   .flex-column-l { flex-direction: column; }

@@ -1,4 +1,4 @@
-const webpack = require("webpack");
+// const webpack = require("webpack");
 const path = require("path");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
@@ -13,66 +13,85 @@ module.exports = {
 
   output: {
     path: path.join(__dirname, "dist"),
-    publicPath: ""
+    publicPath: "/",
+    filename: "[name].bundle.js",
   },
 
   module: {
     rules: [
       {
+        test: /\.(js|jsx)$/, // Lägg till stöd för både .js och .jsx filer
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            cacheDirectory: true,
+          },
+        },
+      },
+      {
         test: /\.((png)|(eot)|(woff)|(woff2)|(ttf)|(svg)|(gif))(\?v=\d+\.\d+\.\d+)?$/,
         loader: "file-loader",
         options: {
-          name: "name=/[hash].[ext]"
-        }
+          name: "[name].[hash:8].[ext]",
+        },
       },
       {
-        loader: "babel-loader",
-        test: /\.js?$/,
-        exclude: /node_modules/,
-        options: {cacheDirectory: true}
-      },
-      {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.(css)$/,
         exclude: /node_modules/,
         use: [
-          "style-loader", 
+          "style-loader",
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              esModule: false
-            }
-          }, 
+              esModule: false,
+            },
+          },
           "css-loader",
           "postcss-loader",
-          {
-            loader: "sass-loader",
-            options: {
-              sassOptions: {
-                outputStyle: "expanded",
-              },
-            },
-          }
-        ]
-      }
-    ]
+        ],
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)$/,
+        loader: "file-loader",
+        options: {
+          name: "[name].[hash:8].[ext]",
+          outputPath: "videos/",
+        },
+      },
+    ],
   },
 
   plugins: [
     new AssetsPlugin({
       filename: "webpack.json",
       path: path.join(process.cwd(), "site/data"),
-      prettyPrint: true
+      prettyPrint: true,
     }),
     new CopyWebpackPlugin({
-      patterns: [{
-        from: "./src/fonts/",
-        to: "fonts/",
-      }]
+      patterns: [
+        {
+          from: "./src/fonts/",
+          to: "fonts/",
+        },
+      ],
+    }),
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: "src/index.html",
+      inject: true,
+      chunks: ["main"], // Anger att denna HTML-fil är för 'main' bundle
     }),
     new HtmlWebpackPlugin({
       filename: "admin/index.html",
-      template: 'src/cms.html',
+      template: "src/cms.html",
       inject: true,
-    })
-  ]
+      excludeChunks: ["main"],
+      chunks: ["cms"], // Anger att denna HTML-fil är för 'cms' bundle
+    }),
+  ],
+
+  resolve: {
+    extensions: [".js", ".jsx"],
+  },
 };
